@@ -103,13 +103,13 @@
 ```
 Customer Feedback Form —-\>  NLP Model \+ LLM —--\>  Database  —--\> Admin Dashboard 
 ```
+![high level architecture](assets/low_architecture.png)
 
-![low level architecture][assets/low_architecture.png]  
 ---
 
 ## High Level Architecture 
 
-![high level architecture][assets/high_architecture.png]
+![high level architecture](assets/high_architecture.png)
 
 # Features Breakdown
 
