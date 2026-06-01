@@ -1,7 +1,7 @@
 [project]
-name = "nlp"
+name = "Customer Review Intelligence System"
 version = "0.1.0"
-description = "Customer Review classification"
+description = "Customer Review classification using NLP and business solutions using LLM"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
