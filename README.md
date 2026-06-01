@@ -105,6 +105,7 @@ Customer Feedback Form —-\>  NLP Model \+ LLM —--\>  Database  —--\> Admin
 ```
 
 ![low level architecture][assets/low_architecture.png]  
+
 ---
 
 ## High Level Architecture 
