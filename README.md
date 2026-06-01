@@ -213,5 +213,27 @@ Programming language
 - Generate solution button (analyse the feedbacks or reviews and provide high level business solution)  
 - Launch feedback form button (starts accepting user feedback by launching form)   
 - Refresh button (refresh the page)
+- Logout Button
+- Close Form Button
 
 ---
+
+## User journey / Workflow 
+
+- This shows the steps user should follow to run the system or get results.
+
+### Steps: 
+**User : Admin**
+
+1. Admin creates account or sign up for *Admin Dashboard*. Admin must provide the passowrd and email for signup.
+2. Admin is directed to main admin dashboard after successful signup where admin can control, view customer data and generate solutions.
+3. Admin must launch the *Customer Feedback Form* which start accepting customer reviews/feedback by clicking **Launch Customer Form** button.
+4. After launching the feedback form, customer fills the data provided in the form.
+5. Trained *NLP model* is responsible to label the review as either *positive* or *negative* on the basis of customer reviews submit through form.
+6. All data generated through customer and NLP model is safely stored in the *database*.
+7. Admin Dashboard fetches all the related data from database and displays them in clean tabular format.
+8. Click *generate summary* button to generate a summary of all the reviews provided by customers.
+9. Click "generate solution" button to analyse the *negative* reviews and provide concise, accurate and logical solution by *LLM*.
+10. Click *Close Form* button to stop accepting customer reviews.
+11. Click *logout* button to quit the Admin Dashboard.
+12. *Log in* successfully to review the customer data, summary, soluion and analytics.
