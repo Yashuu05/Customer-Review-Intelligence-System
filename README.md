@@ -225,6 +225,12 @@ Programming language
 ### Steps: 
 **User : Admin**
 
+![user jounry flowchart](assets/user_journey.png)
+
+---
+
+### Explanation:
+
 1. Admin creates account or sign up for *Admin Dashboard*. Admin must provide the passowrd and email for signup.
 2. Admin is directed to main admin dashboard after successful signup where admin can control, view customer data and generate solutions.
 3. Admin must launch the *Customer Feedback Form* which start accepting customer reviews/feedback by clicking **Launch Customer Form** button.
