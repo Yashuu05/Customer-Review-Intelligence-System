@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Review Intelligence - Admin Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container": "#eeeeee",
+                        "primary-container": "#1a365d",
+                        "on-tertiary-fixed": "#410000",
+                        "surface": "#FFFFFF",
+                        "text-primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001b3c",
+                        "background": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#43474e",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#920703",
+                        "border": "#D9D9D9",
+                        "primary": "#002045",
+                        "table-stripe": "#FAFAFA",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "tertiary-fixed-dim": "#ffb4a8",
+                        "on-secondary-container": "#626262",
+                        "on-tertiary-container": "#ff7360",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-container": "#e1dfdf",
+                        "surface-tint": "#455f88",
+                        "inverse-primary": "#adc7f7",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#1a1c1c",
+                        "surface-variant": "#e2e2e2",
+                        "secondary-fixed": "#e4e2e2",
+                        "outline-variant": "#c4c6cf",
+                        "outline": "#74777f",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed": "#ffdad4",
+                        "surface-dim": "#dadada",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "action-slate": "#3A4A5A",
+                        "on-secondary-fixed-variant": "#464747",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-primary-container": "#86a0cd",
+                        "tertiary-container": "#730000",
+                        "secondary": "#5e5e5e",
+                        "primary-fixed-dim": "#adc7f7",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary": "#4a0000",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "header-height": "64px",
+                        "row-height-md": "40px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "padding-panel": "20px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["JetBrains Mono"],
+                        "label-sm": ["Roboto"],
+                        "body-md": ["Roboto"],
+                        "headline-lg": ["Roboto"],
+                        "headline-md": ["Roboto"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["18px", {"lineHeight": "24px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+</head>
+<body class="font-body-md text-text-primary overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface flex justify-between items-center w-full px-margin-page h-header-height border-b-4 border-primary dark:border-primary-container">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">Customer Review Intelligence</span>
+<nav class="hidden md:flex items-center h-full">
+<a class="px-4 flex items-center h-[60px] text-primary border-b-2 border-primary" href="#">Dashboard</a>
+<a class="px-4 flex items-center h-[60px] text-secondary hover:bg-surface-container-high" href="#">Analytics</a>
+<a class="px-4 flex items-center h-[60px] text-secondary hover:bg-surface-container-high" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 pr-4 border-r border-border">
+<img alt="User" class="w-8 h-8 grid-border" data-alt="A professional, minimalist profile avatar placeholder for an executive user. The icon is rendered in a sharp, flat style using deep navy blue and stark white, following a brutalist design aesthetic. The lighting is even and flat, emphasizing the utilitarian and authoritative nature of the administrative interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-NzpiuxegK7QN9wb03wR4baNAVcvW1w4hmTaeGpRuiwcRqMbpdqQpbaifMJ0SO5gF4QAHNKMILgqXU6P5mnqVYlJDWb3tIJ8-71UuE-c8p4PKnVyZ0o2cQ1b4_xBmJuNlgIzImUwew41ncSTXF6uTK8gzRXiQLI0Mni-13IDOdBxqRRSmODWTc1419l87GnrMp3vnZ5NUoEXs-6wxvYtXwnVnyEtroIgvNjqIWv6INqIFV5LEkDIi5y85_RlfZ4CWueKCXzSskZxq"/>
+<div class="hidden sm:block">
+<p class="text-label-sm font-bold leading-none">Admin User</p>
+<p class="text-[10px] text-secondary">Project Alpha Console</p>
+</div>
+</div>
+<button class="flex items-center gap-2 px-3 py-1 bg-surface-container hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="text-label-sm font-bold">Logout</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Suppressed for Main Dashboard Grid Focus per request, but keeping structure) -->
+<aside class="fixed left-0 top-[64px] h-[calc(100vh-64px)] w-64 bg-surface border-r border-border hidden lg:flex flex-col">
+<div class="p-6 border-b border-border bg-surface-dim/20">
+<h2 class="font-headline-md text-primary font-bold">Project Alpha</h2>
+<p class="text-secondary text-label-sm">Admin Console</p>
+</div>
+<nav class="flex-1 flex flex-col py-4">
+<a class="flex items-center gap-3 px-6 py-3 bg-surface-container-high border-l-4 border-primary text-primary font-bold" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">analytics</span> Analytics
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">psychology</span> LLM Insights
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">table_chart</span> Data Table
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-secondary hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">description</span> Reports
+            </a>
+</nav>
+<div class="p-4 border-t border-border">
+<div class="bg-surface-container p-3">
+<p class="text-[10px] font-bold uppercase tracking-wider text-secondary">System Status</p>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-2 h-2 bg-green-600"></div>
+<span class="text-label-sm">All Services Online</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 mt-[64px] min-h-screen">
+<!-- Action Bar -->
+<div class="bg-white px-margin-page h-[56px] flex items-center justify-between border-b border-border sticky top-[64px] z-40">
+<div class="flex items-center gap-2">
+<button class="bg-primary text-white px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-primary-container">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                    Launch Feedback Form
+                </button>
+<button class="border border-border bg-white text-text-primary px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                    Close Form
+                </button>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-secondary font-mono mr-4 italic">Last synced: 2 minutes ago</span>
+<button class="border border-border bg-white text-text-primary px-3 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                    Refresh
+                </button>
+</div>
+</div>
+<div class="p-margin-page space-y-gutter">
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-white p-padding-panel grid-border flex flex-col justify-between">
+<span class="text-secondary font-bold text-label-sm uppercase tracking-widest">Total Feedbacks</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-data-mono text-[32px] font-bold">1,540</span>
+<span class="text-green-700 text-label-sm font-bold flex items-center">↑ 12%</span>
+</div>
+</div>
+<div class="bg-white p-padding-panel grid-border flex flex-col justify-between">
+<span class="text-secondary font-bold text-label-sm uppercase tracking-widest">Average Rating</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-data-mono text-[32px] font-bold">4.2</span>
+<span class="text-secondary font-data-mono text-[18px]">/ 5</span>
+</div>
+</div>
+<div class="bg-white p-padding-panel grid-border flex flex-col justify-between">
+<span class="text-secondary font-bold text-label-sm uppercase tracking-widest">Feedback Results</span>
+<div class="mt-4 flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="text-label-sm">Positive</span>
+<span class="font-data-mono font-bold text-green-700">1,200</span>
+</div>
+<div class="w-full bg-surface-container h-2">
+<div class="bg-green-700 h-full" style="width: 78%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-sm">Negative</span>
+<span class="font-data-mono font-bold text-error">340</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Analytics Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Left: Age Distribution & Role Count -->
+<div class="bg-white p-padding-panel grid-border">
+<h3 class="text-secondary font-bold text-label-sm uppercase tracking-widest mb-6 border-b border-border pb-2">User Demographics</h3>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<p class="text-label-sm font-bold mb-4">Age Distribution</p>
+<div class="space-y-3">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-mono"><span class="text-primary font-bold">18-24</span><span>245</span></div>
+<div class="bg-surface-container h-4"><div class="bg-primary h-full" style="width: 15%"></div></div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-mono"><span class="text-primary font-bold">25-34</span><span>612</span></div>
+<div class="bg-surface-container h-4"><div class="bg-primary h-full" style="width: 40%"></div></div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-mono"><span class="text-primary font-bold">35-44</span><span>480</span></div>
+<div class="bg-surface-container h-4"><div class="bg-primary h-full" style="width: 32%"></div></div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-mono"><span class="text-primary font-bold">45+</span><span>203</span></div>
+<div class="bg-surface-container h-4"><div class="bg-primary h-full" style="width: 13%"></div></div>
+</div>
+</div>
+</div>
+<div>
+<p class="text-label-sm font-bold mb-4">Role Count</p>
+<table class="w-full text-left">
+<thead class="border-b border-border">
+<tr>
+<th class="py-2 text-[11px] text-secondary uppercase font-bold">Role</th>
+<th class="py-2 text-[11px] text-secondary uppercase font-bold text-right">Qty</th>
+</tr>
+</thead>
+<tbody class="text-label-sm">
+<tr><td class="py-2 border-b border-border">Administrator</td><td class="py-2 border-b border-border text-right font-mono">42</td></tr>
+<tr><td class="py-2 border-b border-border">Editor</td><td class="py-2 border-b border-border text-right font-mono">128</td></tr>
+<tr><td class="py-2 border-b border-border">Analyst</td><td class="py-2 border-b border-border text-right font-mono">310</td></tr>
+<tr><td class="py-2">Standard User</td><td class="py-2 text-right font-mono">1,060</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Center: Gender Count & Geographic Locations -->
+<div class="bg-white p-padding-panel grid-border">
+<h3 class="text-secondary font-bold text-label-sm uppercase tracking-widest mb-6 border-b border-border pb-2">Geographic &amp; Segment Data</h3>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<p class="text-label-sm font-bold mb-4">Gender Count</p>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between p-3 bg-table-stripe grid-border">
+<span class="text-label-sm">Male</span>
+<span class="font-data-mono font-bold">780</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-table-stripe grid-border">
+<span class="text-label-sm">Female</span>
+<span class="font-data-mono font-bold">720</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-table-stripe grid-border">
+<span class="text-label-sm">Other</span>
+<span class="font-data-mono font-bold">40</span>
+</div>
+</div>
+</div>
+<div class="overflow-hidden">
+<p class="text-label-sm font-bold mb-4">Top Locations</p>
+<ul class="space-y-2 text-label-sm h-[160px] overflow-y-auto custom-scrollbar pr-2">
+<li class="flex justify-between items-center py-2 border-b border-border">
+<span>New York, NY</span>
+<span class="font-mono text-[11px] bg-surface-container px-2">312</span>
+</li>
+<li class="flex justify-between items-center py-2 border-b border-border">
+<span>Los Angeles, CA</span>
+<span class="font-mono text-[11px] bg-surface-container px-2">245</span>
+</li>
+<li class="flex justify-between items-center py-2 border-b border-border">
+<span>Chicago, IL</span>
+<span class="font-mono text-[11px] bg-surface-container px-2">189</span>
+</li>
+<li class="flex justify-between items-center py-2 border-b border-border">
+<span>Austin, TX</span>
+<span class="font-mono text-[11px] bg-surface-container px-2">156</span>
+</li>
+<li class="flex justify-between items-center py-2">
+<span>Seattle, WA</span>
+<span class="font-mono text-[11px] bg-surface-container px-2">122</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- LLM Insights Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<div class="bg-white p-padding-panel grid-border">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-secondary font-bold text-label-sm uppercase tracking-widest">Feedback Summary (LLM)</h3>
+<button class="bg-primary text-white px-3 py-1.5 font-bold text-[11px] flex items-center gap-2 hover:brightness-110">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+                            Generate Feedback Summary
+                        </button>
+</div>
+<div class="bg-surface-container-low p-4 grid-border border-dashed">
+<p class="text-body-md leading-relaxed text-secondary italic">
+                            Click "Generate" to utilize Large Language Model analysis on the current data subset. LLM will identify recurring themes, sentiment shifts, and key satisfaction drivers from 1,540 raw responses.
+                        </p>
+</div>
+</div>
+<div class="bg-white p-padding-panel grid-border">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-secondary font-bold text-label-sm uppercase tracking-widest">Recommended Business Solutions (LLM)</h3>
+<button class="bg-primary text-white px-3 py-1.5 font-bold text-[11px] flex items-center gap-2 hover:brightness-110">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span>
+                            Generate Solution
+                        </button>
+</div>
+<div class="bg-surface-container-low p-4 grid-border border-dashed">
+<p class="text-body-md leading-relaxed text-secondary italic">
+                            AI-driven recommendations based on negative feedback trends. Generate actionable strategic steps to mitigate identified pain points in the user journey.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Raw Data Table -->
+<div class="bg-white grid-border overflow-hidden">
+<div class="px-margin-page py-4 border-b border-border flex justify-between items-center">
+<h3 class="text-secondary font-bold text-label-sm uppercase tracking-widest">Raw Data Stream</h3>
+<div class="flex gap-2">
+<input class="h-8 border border-border px-3 text-label-sm focus:outline-none focus:ring-0 focus:border-primary w-64" placeholder="Search data..." type="text"/>
+<button class="bg-white border border-border px-3 h-8 text-[11px] font-bold hover:bg-surface-container-low">Export CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left min-w-[1200px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-border">
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">ID</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Age</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Gender</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Role</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">State</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">City</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Rating</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Feedback</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Sentiment</th>
+<th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-tighter">Probability</th>
+</tr>
+</thead>
+<tbody class="text-label-sm">
+<tr class="bg-white hover:bg-surface-container-low border-b border-border">
+<td class="px-4 py-3 font-mono">#001</td>
+<td class="px-4 py-3">28</td>
+<td class="px-4 py-3">Female</td>
+<td class="px-4 py-3">Analyst</td>
+<td class="px-4 py-3">NY</td>
+<td class="px-4 py-3">New York</td>
+<td class="px-4 py-3 font-bold">5/5</td>
+<td class="px-4 py-3 truncate max-w-xs">Excellent interface speed and data clarity...</td>
+<td class="px-4 py-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 font-bold text-[10px]">POSITIVE</span></td>
+<td class="px-4 py-3 font-mono">0.982</td>
+</tr>
+<tr class="bg-table-stripe hover:bg-surface-container-low border-b border-border">
+<td class="px-4 py-3 font-mono">#002</td>
+<td class="px-4 py-3">42</td>
+<td class="px-4 py-3">Male</td>
+<td class="px-4 py-3">Admin</td>
+<td class="px-4 py-3">CA</td>
+<td class="px-4 py-3">Los Angeles</td>
+<td class="px-4 py-3 font-bold">2/5</td>
+<td class="px-4 py-3 truncate max-w-xs">Reporting tools are slightly confusing to navigate...</td>
+<td class="px-4 py-3"><span class="bg-red-100 text-red-800 px-2 py-0.5 font-bold text-[10px]">NEGATIVE</span></td>
+<td class="px-4 py-3 font-mono">0.741</td>
+</tr>
+<tr class="bg-white hover:bg-surface-container-low border-b border-border">
+<td class="px-4 py-3 font-mono">#003</td>
+<td class="px-4 py-3">31</td>
+<td class="px-4 py-3">Female</td>
+<td class="px-4 py-3">Analyst</td>
+<td class="px-4 py-3">TX</td>
+<td class="px-4 py-3">Austin</td>
+<td class="px-4 py-3 font-bold">4/5</td>
+<td class="px-4 py-3 truncate max-w-xs">Very robust platform for enterprise use.</td>
+<td class="px-4 py-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 font-bold text-[10px]">POSITIVE</span></td>
+<td class="px-4 py-3 font-mono">0.899</td>
+</tr>
+<tr class="bg-table-stripe hover:bg-surface-container-low border-b border-border">
+<td class="px-4 py-3 font-mono">#004</td>
+<td class="px-4 py-3">25</td>
+<td class="px-4 py-3">Other</td>
+<td class="px-4 py-3">User</td>
+<td class="px-4 py-3">IL</td>
+<td class="px-4 py-3">Chicago</td>
+<td class="px-4 py-3 font-bold">5/5</td>
+<td class="px-4 py-3 truncate max-w-xs">Love the brutalist aesthetic, very easy to read.</td>
+<td class="px-4 py-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 font-bold text-[10px]">POSITIVE</span></td>
+<td class="px-4 py-3 font-mono">0.994</td>
+</tr>
+<tr class="bg-white hover:bg-surface-container-low">
+<td class="px-4 py-3 font-mono">#005</td>
+<td class="px-4 py-3">55</td>
+<td class="px-4 py-3">Male</td>
+<td class="px-4 py-3">Editor</td>
+<td class="px-4 py-3">WA</td>
+<td class="px-4 py-3">Seattle</td>
+<td class="px-4 py-3 font-bold">1/5</td>
+<td class="px-4 py-3 truncate max-w-xs">Found a bug in the export functionality.</td>
+<td class="px-4 py-3"><span class="bg-red-100 text-red-800 px-2 py-0.5 font-bold text-[10px]">NEGATIVE</span></td>
+<td class="px-4 py-3 font-mono">0.912</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-4 py-3 bg-surface-container-low border-t border-border flex justify-between items-center">
+<span class="text-[11px] text-secondary">Showing 5 of 1,540 entries</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center border border-border bg-white hover:bg-surface-container text-secondary"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center border border-primary bg-primary text-white font-bold text-[11px]">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-border bg-white hover:bg-surface-container text-secondary text-[11px]">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-border bg-white hover:bg-surface-container text-secondary text-[11px]">3</button>
+<button class="w-8 h-8 flex items-center justify-center border border-border bg-white hover:bg-surface-container text-secondary"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="{{ url_for('static', filename='admin_dashboard.js') }}"></script>
+</body>
+</html>
