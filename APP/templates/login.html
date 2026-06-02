@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sign Up - Customer Review Intelligence</title>
+<title>Log In - Customer Review Intelligence</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -50,10 +50,10 @@
 <div class="w-full max-w-md bg-surface grid-border p-8 shadow-sm">
     <div class="text-center mb-8 border-b-4 border-primary pb-4">
         <h1 class="font-headline-md text-[22px] font-bold text-primary mb-2">Customer Review Intelligence</h1>
-        <p class="text-secondary text-label-sm uppercase tracking-widest">Admin Console Setup</p>
+        <p class="text-secondary text-label-sm uppercase tracking-widest">Admin Console Login</p>
     </div>
     
-    <h2 class="text-headline-md font-bold mb-6 text-center">Create Admin Account</h2>
+    <h2 class="text-headline-md font-bold mb-6 text-center">Welcome Back</h2>
     
     <!-- Flash Messages (for errors) -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -69,7 +69,7 @@
       {% endif %}
     {% endwith %}
 
-    <form method="POST" action="{{ url_for('signup') }}" class="space-y-5">
+    <form method="POST" action="{{ url_for('login') }}" class="space-y-5">
         <div class="flex flex-col gap-2">
             <label for="email" class="font-label-sm text-secondary uppercase font-bold tracking-wider">Email Address</label>
             <input type="email" id="email" name="email" required class="w-full border-border p-2.5 text-body-md bg-surface-container-low focus:bg-surface transition-colors" placeholder="admin@example.com">
@@ -85,25 +85,15 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-2 relative">
-            <label for="confirm_password" class="font-label-sm text-secondary uppercase font-bold tracking-wider">Confirm Password</label>
-            <div class="relative">
-                <input type="password" id="confirm_password" name="confirm_password" required class="w-full border-border p-2.5 pr-10 text-body-md bg-surface-container-low focus:bg-surface transition-colors">
-                <button type="button" class="toggle-password absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary transition-colors" data-target="confirm_password">
-                    <span class="material-symbols-outlined text-[18px]">visibility</span>
-                </button>
-            </div>
-        </div>
-
         <button type="submit" class="w-full bg-primary text-white font-bold p-3 uppercase tracking-wider text-label-sm hover:bg-primary-container transition-colors mt-2">
-            Create Account
+            Log In
         </button>
     </form>
 
     <div class="mt-6 pt-4 border-t border-border text-center">
         <p class="text-body-md text-secondary">
-            Already have an account? 
-            <a href="{{ url_for('login') }}" class="text-primary font-bold hover:underline decoration-2 underline-offset-2">Log in here</a>
+            Need an account? 
+            <a href="{{ url_for('signup') }}" class="text-primary font-bold hover:underline decoration-2 underline-offset-2">Sign up here</a>
         </p>
     </div>
 </div>
