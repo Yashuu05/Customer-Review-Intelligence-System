@@ -1,5 +1,11 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import os
+import sys 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 def load_data(df_path):
     """
     read csv file
@@ -55,5 +61,24 @@ def create_num_cat_list(df):
 
         return numerical_cols, categorical_cols
 
+    except Exception as e:
+        print(f"error: {e}")
+
+def load_hyperparameters(file_path=os.path.join(project_root, "configs", "hyperparameters.json")):
+    """
+    read configs/hyperparameters.json file to load hyperparameters specified for each ML algorithm.
+
+    Input: file path
+    Output: hyperparameter file
+    """
+    import json
+    try:
+        with open(file_path, mode="+r", encoding="utf-8") as file:
+            params = json.load(file)
+        if params is None:
+            print("Hyperaparameter file couldn't load.")
+            return None
+        
+        return params
     except Exception as e:
         print(f"error: {e}")
