@@ -171,20 +171,21 @@ Programming language
 - Tables :   
 1. personal\_info  
 - id (primary ky)  
-- Age (integer)  
-- Gender (varchar)  
-- Role (varchar)  
+- age (integer)  
+- gender (varchar)  
+- role (varchar)  
+- date (DATE)
 2. geo\_info  
 - id (foreign key reference from personal\_info)  
-- State (varchar)  
-- City (varchar)  
+- state (varchar)  
+- city (varchar)  
 3. Reviews  
 - id (foreign key reference from personal\_info)  
-- Feedback (text)  
-- Output (varchar) \-\> negative or positive  
+- feedback (text)  
+- output (varchar) \-\> negative or positive or neutral  
 - Probability score (decimal)  
 4. admin\_users  
-- User name  
+- username  
 - Encrypted password  
 - email\_id 
 

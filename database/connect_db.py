@@ -29,7 +29,7 @@ def connect_to_db(username: str, password: str) -> None:
     1. password: MySQL password set during installation
     2. username : MySQL username
 
-    output: if connection is successful or not
+    output: 'connection' 
     """
     try:
         # 1. Establish the connection to the MySQL server
@@ -43,6 +43,8 @@ def connect_to_db(username: str, password: str) -> None:
         if connection.is_connected():
             log.info("Database connection successful.")
             print("Successfully connected to the database!")
+
+            return connection
 
     except Exception as e:
         log.error(f"{e}")
