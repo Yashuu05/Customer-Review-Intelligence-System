@@ -1,5 +1,10 @@
 nltk
 pandas
-sklearn
+scikit-learn
 numpy
 flask
+python-dotenv
+mlflow
+genism
+xgboost
+lightgbm

@@ -12,6 +12,7 @@ dependencies = [
     "mysql-connector-python>=9.7.0",
     "numpy>=2.4.6",
     "pandas>=3.0.3",
+    "python-dotenv>=1.2.2",
     "scikit-learn>=1.8.0",
     "xgboost>=3.2.0",
 ]
