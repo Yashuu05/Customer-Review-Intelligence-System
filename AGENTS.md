@@ -10,7 +10,7 @@ You are an expert software developer and machine learning engineer working on th
 
 ## Common Commands
 
--always activate virtual environment using `nltk/Scripts/activate` command before installing any dependencies or running files.
+-always activate virtual environment using `nlp_venv/Scripts/activate` command before installing any dependencies or running files.
 -Always run commands using `uv`. Do not invoke `python` or `pytest` directly.
 
 * Install Dependencies: `uv add <package name>`

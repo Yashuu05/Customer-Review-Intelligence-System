@@ -23,7 +23,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from gensim.models import Word2Vec
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
 
 def evaluate_model(y_test, y_pred) -> list:
     """
@@ -39,12 +39,11 @@ def evaluate_model(y_test, y_pred) -> list:
     """
 
     acc = accuracy_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred, average='weighted')
-    precision = precision_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
-    roc = roc_auc_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted', zero_division=0)
+    precision = precision_score(y_test, y_pred, average='weighted', zero_division=0)
+    f1 = f1_score(y_test, y_pred, average='weighted', zero_division=0)
 
-    return [acc, recall, precision, f1, roc] 
+    return [acc, recall, precision, f1] 
 
 def find_max_accuracy(result: dict) -> tuple:
     """
@@ -78,13 +77,16 @@ def train_nlp(X_train, y_train, X_test, y_test) -> None:
     trained_models = {}
 
     for model_name, model in nlp_models.items():
+        # strip 'model__' prefix since estimator is not a Pipeline
+        model_params = {k.replace('model__', ''): v for k, v in param_grid[model_name].items()}
+
         # intergrate hyperparameter
         model_grid = GridSearchCV(
             estimator=model,
-            params = param_grid[model_name],
-            verbose = 2,
-            n_jobs = -1,
-            scoring = "accuracy",
+            param_grid=model_params,
+            verbose=2,
+            n_jobs=-1,
+            scoring="accuracy",
             cv=3
         )
         
@@ -105,7 +107,7 @@ def train_nlp(X_train, y_train, X_test, y_test) -> None:
         y_pred = model_grid.predict(X_test)
 
         # evaluate model
-        evaluation_lst = evaluate_model(model=best_model, y_test=y_test, y_pred=y_pred)
+        evaluation_lst = evaluate_model(y_test=y_test, y_pred=y_pred)
 
         # store the evaluation metrics
         result[model_name] = evaluation_lst 
@@ -142,7 +144,7 @@ def word_embed_reviews(df):
 
     print("\n", df.head(3))
     print("\nshape of data = ", df.shape)
-    data = df[["Summary","Sentiment"]]
+    data = df[["Summary","Sentiment"]].copy()
     print("\nusing dataset = \n", data.head(3))
 
     def preprocess_text(text):
@@ -190,19 +192,18 @@ def word_embed_reviews(df):
 
 def preprocess_target(df, target):
     """
-    Encodes the target values using OneHotEncoder.
+    Encodes the target values using LabelEncoder.
     - Input: raw dataset (dataframe)  |  target (target feature name)
-    - output: OneHotEncode dataframe
+    - output: LabelEncode target series
     """
     print("\npreprocessing the target valuees...")
     y = df[target]
-    encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+    encoder = LabelEncoder()
     encoded_array = encoder.fit_transform(y)
-    feature_names = encoder.get_feature_names_out(target)
-    encoded_df = pd.DataFrame(encoded_array, columns=feature_names)
-    print("\nencoded dataframe = \n", encoded_df.head(8))
-    print("\nshape of encoded df = ", encoded_df.shape)
-    return encoded_df
+    encoded_series = pd.Series(encoded_array, name=target)
+    print("\nencoded target = \n", encoded_series.head(8))
+    print("\nshape of encoded target = ", encoded_series.shape)
+    return encoded_series
 
 #======================================================================================================    
 
