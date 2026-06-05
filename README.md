@@ -80,7 +80,7 @@
 
 # Dataset : 
 
-- Source : [https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)
+- Source : [Flipkart Product Review Dataset](https://www.kaggle.com/datasets/niraliivaghani/flipkart-product-customer-reviews-dataset)
 
 ## About dataset : 
 
@@ -150,7 +150,7 @@ Programming language
 - Purpose : to label feedback as positive or negative   
 - Algorithm : naive bayes, logistic regression, random forest, LightGBM, XGBoost  
 - Evaluation : classification report, accuracy   
-- Dataset : [idmb\_movie\_dataset](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)  
+- Dataset : [flipkart product review](https://www.kaggle.com/datasets/niraliivaghani/flipkart-product-customer-reviews-dataset)  
 - Packages : nltk, scikit-learn, genism, xgboost, lightgbm  
 - Programming language : python
 

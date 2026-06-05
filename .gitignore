@@ -12,5 +12,4 @@ nlp_venv/
 
 # secret keys
 .env
-
 logs/
