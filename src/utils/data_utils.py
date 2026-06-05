@@ -82,3 +82,16 @@ def load_hyperparameters(file_path=os.path.join(project_root, "configs", "hyperp
         return params
     except Exception as e:
         print(f"error: {e}")
+
+def save_json(data, file_path) -> None:
+    """
+    this function saves dictionary into json file
+    Input:
+    - data: dictionary
+    - file_path: path of directory to save json file
+    output:
+    - json file saved in given path
+    """
+    import json
+    with open(file_path, "w") as file:
+        json.dump(data, file, indent=4)

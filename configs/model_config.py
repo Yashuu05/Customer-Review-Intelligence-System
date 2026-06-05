@@ -4,8 +4,8 @@ from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 
 nlp_models = {
-    "logistic regression": LogisticRegression(),
-    "random forest": RandomForestClassifier(),
+    "logistic_regression": LogisticRegression(),
+    "random_forest": RandomForestClassifier(),
     "lightgbm": LGBMClassifier(),
     "xgboost": XGBClassifier()
 }
