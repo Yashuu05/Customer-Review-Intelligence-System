@@ -12,6 +12,7 @@ if project_root not in sys.path:
 
 import pandas as pd
 import joblib
+import numpy as np
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, precision_score, recall_score
 from src.logger import logging as log
@@ -20,6 +21,9 @@ from utils import data_utils
 import re
 import nltk
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from gensim.models import Word2Vec
+from sklearn.preprocessing import OneHotEncoder
 
 def evaluate_model(y_test, y_pred) -> list:
     """
@@ -123,31 +127,122 @@ def train_nlp(X_train, y_train, X_test, y_test) -> None:
     data_utils.save_json(data=best_params, file_path=os.path.join(project_root, "results", "best_parameters.json"))
 
 
-def preprocess_dataset(df):
+def word_embed_reviews(df):
+    """
+    This function converts raw text into word embedding using tokenization, stopwords, lemmatization, and 
+    word2vec. The resulting single sentence has word embedding of 100 dimensions.
+    
+    - Input: raw dataset
+    - Output: word embedding array
+    """
     nltk.download("stopwords")
     stop_words = set(stopwords.words("english"))
+    lemmatizer = WordNetLemmatizer()
+    embedding_size = 100
 
     print("\n", df.head(3))
     print("\nshape of data = ", df.shape)
     data = df[["Summary","Sentiment"]]
     print("\nusing dataset = \n", data.head(3))
 
-    def clean_text(text):
+    def preprocess_text(text):
         text = text.lower()
         cleaned_text = re.sub(r'[^a-zA-Z]',' ', text)
         token = cleaned_text.split()
+        processed_tokens = []
+        for word in token:
+            if word not in stop_words:
+                processed_tokens.append(lemmatizer.lemmatize(word))
+        return processed_tokens
+    
+    print("\npreprocessing the text")
+    data["Summary"] = data["Summary"].apply(preprocess_text)
+    
+    # training word2vec model
+    word2vec_model = Word2Vec(
+        sentences=data["Summary"],
+        vector_size=embedding_size,
+        window=5,
+        min_count=1,
+        workers=4
+    )
 
+    # word embedding 
+    def document_vector(tokens):
+        vectors = []
+        for word in tokens:
+            if word in word2vec_model.wv:
+                vectors.append(
+                    word2vec_model.wv[word]
+                )
 
+        if len(vectors) == 0:
+            return np.zeros(embedding_size)
+
+        return np.mean(vectors, axis=0)
+    
+    print("Implementing Word Embedding")
+    X = np.array([
+        document_vector(tokens) for tokens in data["Summary"]
+    ])
+    print("\nshape of Word Embedding array: ", X.shape)
+    return X 
+
+def preprocess_target(df, target):
+    """
+    Encodes the target values using OneHotEncoder.
+    - Input: raw dataset (dataframe)  |  target (target feature name)
+    - output: OneHotEncode dataframe
+    """
+    print("\npreprocessing the target valuees...")
+    y = df[target]
+    encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+    encoded_array = encoder.fit_transform(y)
+    feature_names = encoder.get_feature_names_out(target)
+    encoded_df = pd.DataFrame(encoded_array, columns=feature_names)
+    print("\nencoded dataframe = \n", encoded_df.head(8))
+    print("\nshape of encoded df = ", encoded_df.shape)
+    return encoded_df
+
+#======================================================================================================    
 
 if __name__ == "__main__":
-    print("============ training initialized =================")
-    log.info("initialized training for nlp")
+    try:
+        print("============ training initialized =================")
+        log.info("initialized training for nlp")
 
-    # step 1 
-    print("1. loading dataset...")
-    df = data_utils.load_data(df_path=os.path.join(project_root, "data", "dataset.csv"))
-    if df is not None:
-        # preprocess dataset
-        pass
-    else:
-        print("\nError loading dataset.")
+        # step 1 
+        print("1. loading dataset...")
+        df = data_utils.load_data(df_path=os.path.join(project_root, "data", "dataset.csv"))
+        if df is not None:
+            log.info("dataset read successfully.")
+        
+            # step 2: preprocess dataset
+            print("\n2. preprocessing the reviews...")
+            X = word_embed_reviews(df=df)
+            log.info("word embedding implemented.")
+        
+            # step 3 : preprocess target values
+            print("\n3. Preprocessing target values...")
+            y = preprocess_target(df=df, target="Sentiment")
+        
+            # step 4: split dataset
+            print("\n4. splitting dataset...")
+            X_train, X_test, y_train, y_test = data_utils.split_dataset(
+                randomState=42,
+                testSize=0.22,
+                X=X,
+                y=y
+            )
+            log.info("Split the dataset successfully")
+            # step 5: train model
+            print("\n5. training models")
+            train_nlp(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test)
+            log.info("training of model completed")
+
+        else:
+            print("\nError loading dataset.")
+
+    except Exception as e:
+        print(f"error: {e}")
+        log.error(f"{e}")
