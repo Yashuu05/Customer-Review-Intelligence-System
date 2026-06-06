@@ -138,6 +138,7 @@ def word_embed_reviews(df):
     - Output: word embedding array
     """
     nltk.download("stopwords")
+    nltk.download("wordnet")
     stop_words = set(stopwords.words("english"))
     lemmatizer = WordNetLemmatizer()
     embedding_size = 100
@@ -148,6 +149,8 @@ def word_embed_reviews(df):
     print("\nusing dataset = \n", data.head(3))
 
     def preprocess_text(text):
+        if not isinstance(text, str):
+            text = ""
         text = text.lower()
         cleaned_text = re.sub(r'[^a-zA-Z]',' ', text)
         token = cleaned_text.split()
@@ -231,7 +234,7 @@ if __name__ == "__main__":
             print("\n4. splitting dataset...")
             X_train, X_test, y_train, y_test = data_utils.split_dataset(
                 randomState=42,
-                testSize=0.22,
+                testSize=0.20,
                 X=X,
                 y=y
             )

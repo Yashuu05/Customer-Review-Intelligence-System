@@ -3,11 +3,9 @@
         "model__learning_rate": [
             0.01,
             0.05,
-            0.1,
-            0.2
+            0.1
         ],
         "model__max_depth": [
-            3,
             5,
             7,
             10
@@ -30,8 +28,7 @@
         "model__gamma": [
             0,
             0.1,
-            0.5,
-            1
+            0.5
         ],
         "model__scale_pos_weight": [
             1,
@@ -46,7 +43,6 @@
             500
         ],
         "model__max_depth": [
-            null,
             10,
             20,
             30
@@ -71,9 +67,7 @@
             0.001,
             0.01,
             0.1,
-            1,
-            10,
-            100
+            1
         ],
         "model__penalty": [
             "l1",
