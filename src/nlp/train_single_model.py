@@ -5,7 +5,7 @@ import os
 import sys 
 from dotenv import load_dotenv
 load_dotenv()
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
@@ -14,7 +14,7 @@ import pandas as pd
 import joblib
 import numpy as np
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from src.logger import logging as log
 from configs.model_config import nlp_models
 from utils import data_utils
@@ -29,7 +29,7 @@ from sklearn.preprocessing import LabelEncoder
 # UPDATE THIS VARIABLE TO TRAIN DESIRED MODEL
 # Available models: "logistic_regression", "random_forest", "lightgbm", "xgboost"
 # ==========================================
-TARGET_MODEL_NAME = "random_forest"
+TARGET_MODEL_NAME = "lightgbm"
 
 def evaluate_model(y_test, y_pred) -> list:
     """
