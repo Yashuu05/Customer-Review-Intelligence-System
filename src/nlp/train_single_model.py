@@ -24,7 +24,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from gensim.models import Word2Vec
-from sklearn.preprocessing import LabelEncoder
+import mlflow
 
 # ==========================================
 # UPDATE THIS VARIABLE TO TRAIN DESIRED MODEL
@@ -60,6 +60,7 @@ def train_single_model(X_train, y_train, X_test, y_test, model_name: str) -> Non
 
     model = nlp_models[model_name]
 
+    mlflow.autolog()
     # load hyperparameters
     param_grid = data_utils.load_hyperparameters(file_path=os.path.join(project_root, "configs", "hyperparameters.json"))
     
@@ -79,7 +80,7 @@ def train_single_model(X_train, y_train, X_test, y_test, model_name: str) -> Non
         scoring="accuracy",
         cv=3
     )
-    
+
     print(f"\ntraining {model_name}...")
     model_grid.fit(X_train, y_train)
     

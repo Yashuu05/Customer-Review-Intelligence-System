@@ -67,17 +67,11 @@
             0.001,
             0.01,
             0.1,
-            1
-        ],
-        "model__penalty": [
-            "l1",
-            "l2"
-        ],
-        "model__solver": [
-            "liblinear",
-            "saga"
+            1,
+            10
         ],
         "model__max_iter": [
+            500,
             1000,
             2000
         ]
