@@ -13,6 +13,7 @@ import joblib
 import numpy as np
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.preprocessing import LabelEncoder
 from src.logger import logging as log
 from configs.model_config import nlp_models
 utils_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +31,7 @@ import mlflow
 # UPDATE THIS VARIABLE TO TRAIN DESIRED MODEL
 # Available models: "logistic_regression", "random_forest", "lightgbm", "xgboost"
 # ==========================================
-TARGET_MODEL_NAME = "lightgbm"
+TARGET_MODEL_NAME = "logistic_regression"
 
 def evaluate_model(y_test, y_pred) -> list:
     """
@@ -69,7 +70,12 @@ def train_single_model(X_train, y_train, X_test, y_test, model_name: str) -> Non
         return
 
     # strip 'model__' prefix since estimator is not a Pipeline
-    model_params = {k.replace('model__', ''): v for k, v in param_grid[model_name].items()}
+    if isinstance(param_grid[model_name], list):
+        model_params = []
+        for param_dict in param_grid[model_name]:
+            model_params.append({k.replace('model__', ''): v for k, v in param_dict.items()})
+    else:
+        model_params = {k.replace('model__', ''): v for k, v in param_grid[model_name].items()}
 
     # intergrate hyperparameter
     model_grid = GridSearchCV(

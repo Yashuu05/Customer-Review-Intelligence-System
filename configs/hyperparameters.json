@@ -62,20 +62,64 @@
             false
         ]
     },
-    "logistic_regression": {
-        "model__C": [
-            0.001,
-            0.01,
-            0.1,
-            1,
-            10
-        ],
-        "model__max_iter": [
-            500,
-            1000,
-            2000
-        ]
-    },
+    "logistic_regression": [
+        {
+            "model__C": [
+                0.001,
+                0.01,
+                0.1,
+                1,
+                10
+            ],
+            "model__penalty": [
+                "l1",
+                "l2"
+            ],
+            "model__solver": [
+                "saga"
+            ],
+            "model__class_weight": [
+                "balanced"
+            ],
+            "model__fit_intercept": [
+                true,
+                false
+            ],
+            "model__max_iter": [
+                1000,
+                2000
+            ]
+        },
+        {
+            "model__C": [
+                0.001,
+                0.01,
+                0.1,
+                1,
+                10
+            ],
+            "model__penalty": [
+                "elasticnet"
+            ],
+            "model__solver": [
+                "saga"
+            ],
+            "model__l1_ratio": [
+                0.2, 0.5, 0.8
+            ],
+            "model__class_weight": [
+                "balanced"
+            ],
+            "model__fit_intercept": [
+                true,
+                false
+            ],
+            "model__max_iter": [
+                1000,
+                2000
+            ]
+        }
+    ],
     "lightgbm": {
         "model__learning_rate": [
             0.01,

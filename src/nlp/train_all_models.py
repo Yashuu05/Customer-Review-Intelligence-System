@@ -78,7 +78,12 @@ def train_nlp(X_train, y_train, X_test, y_test) -> None:
 
     for model_name, model in nlp_models.items():
         # strip 'model__' prefix since estimator is not a Pipeline
-        model_params = {k.replace('model__', ''): v for k, v in param_grid[model_name].items()}
+        if isinstance(param_grid[model_name], list):
+            model_params = []
+            for param_dict in param_grid[model_name]:
+                model_params.append({k.replace('model__', ''): v for k, v in param_dict.items()})
+        else:
+            model_params = {k.replace('model__', ''): v for k, v in param_grid[model_name].items()}
 
         # intergrate hyperparameter
         model_grid = GridSearchCV(
