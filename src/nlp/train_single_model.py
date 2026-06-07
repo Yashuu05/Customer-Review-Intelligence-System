@@ -3,8 +3,6 @@ train a single selected algorithm to find its performance
 """
 import os
 import sys 
-from dotenv import load_dotenv
-load_dotenv()
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 if project_root not in sys.path:
@@ -17,6 +15,9 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from src.logger import logging as log
 from configs.model_config import nlp_models
+utils_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if utils_path not in sys.path:
+    sys.path.insert(0, utils_path)
 from utils import data_utils
 import re
 import nltk
@@ -99,13 +100,20 @@ def train_single_model(X_train, y_train, X_test, y_test, model_name: str) -> Non
     print(f"Precision: {precision}")
     print(f"F1 Score: {f1}")
 
+    # create a dictionary of model's results
+    model_results = {
+        "accuracy" : accuracy,
+        "recall": recall,
+        "precision": precision,
+        "f1 score": f1
+    }
     # save best model
     print(f"\nsaving {model_name}...")
     joblib.dump(best_model, filename=os.path.join(project_root, "model", f"{model_name}_nlp.joblib"))
 
     # save results
     print("\nsaving results...")
-    result = {model_name: evaluation_lst}
+    result = {model_name: model_results}
     data_utils.save_json(data=result, file_path=os.path.join(project_root, "results", f"{model_name}_result_metrics.json"))
 
     # save best parameters of the model

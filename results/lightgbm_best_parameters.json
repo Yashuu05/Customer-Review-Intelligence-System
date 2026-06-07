@@ -1,0 +1,11 @@
+{
+    "lightgbm": {
+        "best_parameters": {
+            "boosting_type": "dart",
+            "learning_rate": 0.1,
+            "n_estimators": 500,
+            "num_leaves": 100
+        },
+        "best_score": 0.9154967446333154
+    }
+}
