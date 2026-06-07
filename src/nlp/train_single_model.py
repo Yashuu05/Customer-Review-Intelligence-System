@@ -31,7 +31,7 @@ import mlflow
 # UPDATE THIS VARIABLE TO TRAIN DESIRED MODEL
 # Available models: "logistic_regression", "random_forest", "lightgbm", "xgboost"
 # ==========================================
-TARGET_MODEL_NAME = "logistic_regression"
+TARGET_MODEL_NAME = "xgboost"
 
 def evaluate_model(y_test, y_pred) -> list:
     """

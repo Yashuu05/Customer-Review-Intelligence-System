@@ -1,0 +1,10 @@
+{
+    "xgboost": {
+        "best_parameters": {
+            "learning_rate": 0.1,
+            "max_depth": 10,
+            "n_estimators": 500
+        },
+        "best_score": 0.915070016991682
+    }
+}
