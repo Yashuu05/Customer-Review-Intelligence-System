@@ -1,0 +1,11 @@
+review,actual_sentiment,predict,sentiment
+"Yeah, overall the quality of the product is good.",positive,2,positive
+"worst experience ever!,cooler not provide cool air because 1year experience",negative,2,positive
+"I don't like the quality, but overall product is ok.",neutral,2,positive
+wonderful product can go for it,positive,2,positive
+worth every penny.,positive,2,positive
+"do not but, waste product",negative,2,positive
+never buying this again,negative,2,positive
+this is average product. I expected someting great.,neutral,2,positive
+Not useful. I don't recommend this product to anyone.,negative,2,positive
+Wonderful product. I like it and had good experience,positive,2,positive

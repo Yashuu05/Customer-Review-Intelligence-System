@@ -176,6 +176,10 @@ def word_embed_reviews(df):
         min_count=1,
         workers=4
     )
+    # save word2vec model
+    word2vec_path = os.path.join(project_root, "model", "word2vec.model")
+    print(f"saving word2vec model to {word2vec_path}")
+    word2vec_model.save(word2vec_path)
 
     # word embedding 
     def document_vector(tokens):

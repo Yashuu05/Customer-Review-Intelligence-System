@@ -15,20 +15,13 @@ from gensim.models import Word2Vec
 import pandas as pd
 
 MODEL_NAME = "lightgbm"
-MODEL_PATH = os.path.join(project_root, "models", f"{MODEL_NAME}_nlp.joblib")
+MODEL_PATH = os.path.join(project_root, "model", f"{MODEL_NAME}_nlp.joblib")
 
 def classify_review(model, df) -> None:
     nltk.download("stopwords", quiet=True)
+    nltk.download("wordnet", quiet=True)
     stop_words = set(stopwords.words("english"))
     lemmatizer = WordNetLemmatizer()
-
-    word2vec_model = Word2Vec(
-    sentences=df['review'],
-    vector_size=100,
-    window=5,
-    min_count=1,
-    workers=4
-)
 
     try:
         def preprocess_text(text):
@@ -43,6 +36,14 @@ def classify_review(model, df) -> None:
                     processed_tokens.append(lemmatizer.lemmatize(word))
             return processed_tokens
         
+        # preprocess the reviews
+        log.info("preprocessing the reviews")
+        processed_series = df["review"].apply(preprocess_text)
+
+        word2vec_path = os.path.join(project_root, "model", "word2vec.model")
+        log.info(f"loading word2vec model from {word2vec_path}")
+        word2vec_model = Word2Vec.load(word2vec_path)
+
         def document_vector(tokens):
             vectors = []
             for word in tokens:
@@ -52,27 +53,30 @@ def classify_review(model, df) -> None:
                 return np.zeros(100)
             return np.mean(vectors, axis=0)
         
-        # preprocess the reviews
-        log.info("preprocssing the reviews")
-        tokens = preprocess_text(text=df["review"])
         # word embedding
-        review_vector = document_vector(tokens)
         log.info("converting reviews into vectors.")
+        review_vectors = np.array([document_vector(tokens) for tokens in processed_series])
+
         # predict the output using trained model
-        prediction = model.predict([review_vector])
         log.info("predicting the output")
-        if prediction == 0:
-            sentiment = "negative"
-        elif prediction == 1:
-            sentiment = "neutral"
-        else:
-            sentiment = "positive"
+        predictions = model.predict(review_vectors)
+        
+        sentiments = []
+        for pred in predictions:
+            if pred == 0:
+                sentiments.append("negative")
+            elif pred == 1:
+                sentiments.append("neutral")
+            else:
+                sentiments.append("positive")
+                
         # save result into a csv file 
         pd.DataFrame({
             "review": df["review"],
-            "predict": prediction,    
-            "sentiment": sentiment               
-        }).to_csv(f"{os.path.join(project_root,"results","test_results.csv")}", index=False)    
+            "actual_sentiment": df["actual_sentiment"],
+            "predict": predictions,    
+            "sentiment": sentiments               
+        }).to_csv(os.path.join(project_root, "results", "test_results.csv"), index=False)    
         log.info("saved results to the 'results' folder")   
 
     except Exception as e:
@@ -99,11 +103,11 @@ if __name__ == "__main__":
 
     log.info("Testing initiated")
     print("loading saved lightgbm model...")
-    lgbm = joblib.load(f"{MODEL_PATH}")
+    lgbm = joblib.load(MODEL_PATH)
     if lgbm is not None:
         log.info(f"{MODEL_NAME} model load from {MODEL_PATH}")
         print(f"{MODEL_NAME} loaded succesfully")
-
+        classify_review(lgbm, df)
     else:
         log.error(f"Error while loading model from path {MODEL_PATH}")
         print("Error: model failed to load.")
