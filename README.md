@@ -176,6 +176,7 @@ Programming language
 - age (integer)  
 - gender (varchar)  
 - role (varchar)  
+- product (varchar)
 - date (DATE)
 2. geo\_info  
 - id (foreign key reference from personal\_info)  

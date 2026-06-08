@@ -34,6 +34,7 @@ def create_table():
                 role VARCHAR(50) NOT NULL,
                 gender VARCHAR(50),
                 age INT CHECK(age >= 18),
+                product VARCHAR(50)
                 date DATE
             )
             """,
