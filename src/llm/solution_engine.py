@@ -9,8 +9,8 @@ import json
 def stream_ollama(customer_data, llm="llama3.1:8b", system_instruction="You are a helpful assistant"):
     
     prompt = f"""Analyse the given customer data provided to you and provide professional business solution.
-    customer data : {customer_data}
-    """
+    Customer Data: {customer_data}"""
+    
     try:
         stream = chat(
             model=llm,
@@ -43,7 +43,6 @@ if __name__ == "__main__":
         print("LLM thinking...")
         stream_ollama(
             customer_data=data,
-            prompt="what is machine learning and its types?",
             system_instruction=sys_prompt
         )
 
