@@ -1,0 +1,511 @@
+{
+  "id_1": {
+    "personal_information": {
+      "age": 22,
+      "gender": "male",
+      "role": "Student",
+      "product": "Wireless Mouse"
+    },
+    "geographic_information": {
+      "state": "Maharashtra",
+      "city": "Pune"
+    },
+    "customer_review": {
+      "review": "Mouse performance is smooth and battery backup is excellent.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_2": {
+    "personal_information": {
+      "age": 35,
+      "gender": "female",
+      "role": "Software Engineer",
+      "product": "Laptop"
+    },
+    "geographic_information": {
+      "state": "Karnataka",
+      "city": "Bengaluru"
+    },
+    "customer_review": {
+      "review": "Laptop heats too much during meetings and performance drops.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_3": {
+    "personal_information": {
+      "age": 29,
+      "gender": "male",
+      "role": "Designer",
+      "product": "Mechanical Keyboard"
+    },
+    "geographic_information": {
+      "state": "Delhi",
+      "city": "New Delhi"
+    },
+    "customer_review": {
+      "review": "Keyboard keys are comfortable but delivery was delayed.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_4": {
+    "personal_information": {
+      "age": 41,
+      "gender": "female",
+      "role": "Teacher",
+      "product": "Bluetooth Speaker"
+    },
+    "geographic_information": {
+      "state": "Tamil Nadu",
+      "city": "Chennai"
+    },
+    "customer_review": {
+      "review": "Sound quality is amazing for the price.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_5": {
+    "personal_information": {
+      "age": 27,
+      "gender": "male",
+      "role": "Marketing Executive",
+      "product": "Smartphone"
+    },
+    "geographic_information": {
+      "state": "Gujarat",
+      "city": "Ahmedabad"
+    },
+    "customer_review": {
+      "review": "Battery drains quickly and camera quality is disappointing.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_6": {
+    "personal_information": {
+      "age": 31,
+      "gender": "female",
+      "role": "Doctor",
+      "product": "Smartwatch"
+    },
+    "geographic_information": {
+      "state": "Maharashtra",
+      "city": "Nagpur"
+    },
+    "customer_review": {
+      "review": "Health tracking features are accurate and useful.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_7": {
+    "personal_information": {
+      "age": 24,
+      "gender": "male",
+      "role": "Student",
+      "product": "Earbuds"
+    },
+    "geographic_information": {
+      "state": "Uttar Pradesh",
+      "city": "Lucknow"
+    },
+    "customer_review": {
+      "review": "Sound is decent but microphone quality is poor.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_8": {
+    "personal_information": {
+      "age": 45,
+      "gender": "female",
+      "role": "Business Owner",
+      "product": "Printer"
+    },
+    "geographic_information": {
+      "state": "West Bengal",
+      "city": "Kolkata"
+    },
+    "customer_review": {
+      "review": "Printer stops working frequently and customer support is slow.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_9": {
+    "personal_information": {
+      "age": 38,
+      "gender": "male",
+      "role": "Manager",
+      "product": "Office Chair"
+    },
+    "geographic_information": {
+      "state": "Telangana",
+      "city": "Hyderabad"
+    },
+    "customer_review": {
+      "review": "Chair is very comfortable for long working hours.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_10": {
+    "personal_information": {
+      "age": 26,
+      "gender": "female",
+      "role": "Content Writer",
+      "product": "Laptop Stand"
+    },
+    "geographic_information": {
+      "state": "Kerala",
+      "city": "Kochi"
+    },
+    "customer_review": {
+      "review": "Build quality is average but works fine.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_11": {
+    "personal_information": {
+      "age": 30,
+      "gender": "male",
+      "role": "Data Analyst",
+      "product": "Monitor"
+    },
+    "geographic_information": {
+      "state": "Rajasthan",
+      "city": "Jaipur"
+    },
+    "customer_review": {
+      "review": "Display flickers sometimes and causes eye strain.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_12": {
+    "personal_information": {
+      "age": 33,
+      "gender": "female",
+      "role": "HR Manager",
+      "product": "Webcam"
+    },
+    "geographic_information": {
+      "state": "Punjab",
+      "city": "Chandigarh"
+    },
+    "customer_review": {
+      "review": "Video quality is crystal clear during meetings.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_13": {
+    "personal_information": {
+      "age": 28,
+      "gender": "male",
+      "role": "Photographer",
+      "product": "Camera Bag"
+    },
+    "geographic_information": {
+      "state": "Madhya Pradesh",
+      "city": "Indore"
+    },
+    "customer_review": {
+      "review": "Bag has enough storage but zip quality feels weak.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_14": {
+    "personal_information": {
+      "age": 36,
+      "gender": "female",
+      "role": "Professor",
+      "product": "Tablet"
+    },
+    "geographic_information": {
+      "state": "Odisha",
+      "city": "Bhubaneswar"
+    },
+    "customer_review": {
+      "review": "Tablet becomes slow after software updates.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_15": {
+    "personal_information": {
+      "age": 23,
+      "gender": "male",
+      "role": "Student",
+      "product": "Gaming Mouse"
+    },
+    "geographic_information": {
+      "state": "Maharashtra",
+      "city": "Mumbai"
+    },
+    "customer_review": {
+      "review": "RGB lighting and response time are excellent.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_16": {
+    "personal_information": {
+      "age": 40,
+      "gender": "female",
+      "role": "Banker",
+      "product": "Router"
+    },
+    "geographic_information": {
+      "state": "Bihar",
+      "city": "Patna"
+    },
+    "customer_review": {
+      "review": "Internet connection drops frequently.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_17": {
+    "personal_information": {
+      "age": 32,
+      "gender": "male",
+      "role": "Entrepreneur",
+      "product": "Projector"
+    },
+    "geographic_information": {
+      "state": "Haryana",
+      "city": "Gurugram"
+    },
+    "customer_review": {
+      "review": "Picture quality is good but fan noise is noticeable.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_18": {
+    "personal_information": {
+      "age": 29,
+      "gender": "female",
+      "role": "Architect",
+      "product": "Graphics Tablet"
+    },
+    "geographic_information": {
+      "state": "Karnataka",
+      "city": "Mysuru"
+    },
+    "customer_review": {
+      "review": "Pen sensitivity works perfectly for design tasks.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_19": {
+    "personal_information": {
+      "age": 34,
+      "gender": "male",
+      "role": "Sales Executive",
+      "product": "Power Bank"
+    },
+    "geographic_information": {
+      "state": "Assam",
+      "city": "Guwahati"
+    },
+    "customer_review": {
+      "review": "Charging speed is very slow compared to advertised speed.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_20": {
+    "personal_information": {
+      "age": 25,
+      "gender": "female",
+      "role": "Student",
+      "product": "Headphones"
+    },
+    "geographic_information": {
+      "state": "Goa",
+      "city": "Panaji"
+    },
+    "customer_review": {
+      "review": "Comfortable to wear and sound isolation is good.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_21": {
+    "personal_information": {
+      "age": 37,
+      "gender": "male",
+      "role": "Consultant",
+      "product": "Smartphone"
+    },
+    "geographic_information": {
+      "state": "Tamil Nadu",
+      "city": "Coimbatore"
+    },
+    "customer_review": {
+      "review": "Phone hangs occasionally while multitasking.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_22": {
+    "personal_information": {
+      "age": 43,
+      "gender": "female",
+      "role": "Lawyer",
+      "product": "Laptop Bag"
+    },
+    "geographic_information": {
+      "state": "Delhi",
+      "city": "New Delhi"
+    },
+    "customer_review": {
+      "review": "Material quality is premium and durable.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_23": {
+    "personal_information": {
+      "age": 27,
+      "gender": "male",
+      "role": "Engineer",
+      "product": "USB Hub"
+    },
+    "geographic_information": {
+      "state": "Jharkhand",
+      "city": "Ranchi"
+    },
+    "customer_review": {
+      "review": "Ports are useful but cable length is short.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_24": {
+    "personal_information": {
+      "age": 31,
+      "gender": "female",
+      "role": "Researcher",
+      "product": "External Hard Drive"
+    },
+    "geographic_information": {
+      "state": "Maharashtra",
+      "city": "Nashik"
+    },
+    "customer_review": {
+      "review": "Drive corrupted within two weeks of usage.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_25": {
+    "personal_information": {
+      "age": 28,
+      "gender": "male",
+      "role": "Developer",
+      "product": "Mechanical Keyboard"
+    },
+    "geographic_information": {
+      "state": "Karnataka",
+      "city": "Bengaluru"
+    },
+    "customer_review": {
+      "review": "Typing experience is smooth and satisfying.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_26": {
+    "personal_information": {
+      "age": 39,
+      "gender": "female",
+      "role": "Teacher",
+      "product": "Tablet"
+    },
+    "geographic_information": {
+      "state": "Uttar Pradesh",
+      "city": "Kanpur"
+    },
+    "customer_review": {
+      "review": "Battery backup is average but display quality is nice.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_27": {
+    "personal_information": {
+      "age": 46,
+      "gender": "male",
+      "role": "Businessman",
+      "product": "Air Conditioner"
+    },
+    "geographic_information": {
+      "state": "Punjab",
+      "city": "Ludhiana"
+    },
+    "customer_review": {
+      "review": "Cooling is ineffective during summer afternoons.",
+      "sentiment": "negative"
+    }
+  },
+
+  "id_28": {
+    "personal_information": {
+      "age": 24,
+      "gender": "female",
+      "role": "Graphic Designer",
+      "product": "Monitor"
+    },
+    "geographic_information": {
+      "state": "West Bengal",
+      "city": "Siliguri"
+    },
+    "customer_review": {
+      "review": "Color accuracy is impressive for creative work.",
+      "sentiment": "positive"
+    }
+  },
+
+  "id_29": {
+    "personal_information": {
+      "age": 30,
+      "gender": "male",
+      "role": "Freelancer",
+      "product": "Laptop"
+    },
+    "geographic_information": {
+      "state": "Kerala",
+      "city": "Thiruvananthapuram"
+    },
+    "customer_review": {
+      "review": "Performance is decent but speakers are too weak.",
+      "sentiment": "neutral"
+    }
+  },
+
+  "id_30": {
+    "personal_information": {
+      "age": 42,
+      "gender": "female",
+      "role": "Operations Manager",
+      "product": "Printer"
+    },
+    "geographic_information": {
+      "state": "Maharashtra",
+      "city": "Aurangabad"
+    },
+    "customer_review": {
+      "review": "Paper jams happen frequently and maintenance cost is high.",
+      "sentiment": "negative"
+    }
+  }
+}
