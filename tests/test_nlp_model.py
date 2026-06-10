@@ -13,11 +13,11 @@ from src.logger import logging as log
 import numpy as np
 from gensim.models import Word2Vec
 import pandas as pd
-import random
 
 MODEL_NAME = "lightgbm"
 MODEL_PATH = os.path.join(project_root, "model", f"{MODEL_NAME}_nlp.joblib")
 word2vec_path = os.path.join(project_root, "model", f"{MODEL_NAME}_word2vec.model")
+DATA_PATH = os.path.join(project_root, 'data', "dataset.csv")
 
 def classify_review(model, df) -> None:
     nltk.download("stopwords", quiet=True)
@@ -40,7 +40,7 @@ def classify_review(model, df) -> None:
         
         # preprocess the reviews
         log.info("preprocessing the reviews")
-        processed_series = df["review"].apply(preprocess_text)
+        processed_series = df["Summary"].apply(preprocess_text)
 
         log.info(f"loading word2vec model from {word2vec_path}")
         word2vec_model = Word2Vec.load(word2vec_path)
@@ -73,26 +73,49 @@ def classify_review(model, df) -> None:
                 
         # save result into a csv file 
         pd.DataFrame({
-            "review": df["review"],
-            "predict": predictions,    
-            "sentiment": sentiments               
+            "review": df["Summary"],
+            "predict": predictions,
+            "actual": df["Sentiment"],    
+            "predicted": sentiments               
         }).to_csv(os.path.join(project_root, "results", "test_results.csv"), index=False)    
         log.info("saved results to the 'results' folder")   
 
     except Exception as e:
         print(f"Error: {e}")
 
-if __name__ == "__main__": 
-
-    random.ra
+def test_lightgbm_model_inference():
+    # load dataset    
+    print("loading dataset")
+    df = pd.read_csv(filepath_or_buffer=DATA_PATH)
+    assert df is not None, "Error: couldn't load dataset"
+    
+    log.info(f"{DATA_PATH} read successfully")
+    df = df[["Summary", "Sentiment"]]
+    # Select 20% of the rows randomly
+    random_df = df.sample(frac=0.2, random_state=42)
 
     log.info("Testing initiated")
     print("loading saved lightgbm model...")
-    lgbm = joblib.load(MODEL_PATH)
-    if lgbm is not None:
-        log.info(f"{MODEL_NAME} model load from {MODEL_PATH}")
-        print(f"{MODEL_NAME} loaded succesfully")
-        classify_review(lgbm, df)
-    else:
-        log.error(f"Error while loading model from path {MODEL_PATH}")
-        print("Error: model failed to load.")
+    assert os.path.exists(MODEL_PATH), f"Error: model file not found at {MODEL_PATH}"
+    lgbm_model = joblib.load(MODEL_PATH)
+    
+    assert lgbm_model is not None, "Error: model failed to load."
+    
+    log.info(f"{MODEL_NAME} model load from {MODEL_PATH}")
+    print(f"{MODEL_NAME} loaded succesfully")
+    
+    # predict the sentiment
+    classify_review(lgbm_model, random_df)
+    
+    # Verify the results file was created
+    results_path = os.path.join(project_root, "results", "test_results.csv")
+    assert os.path.exists(results_path), "Error: test_results.csv was not created"
+    
+    # Check if the output has expected columns
+    results_df = pd.read_csv(results_path)
+    assert "predict" in results_df.columns, "Predictions missing in output file"
+    assert "sentiment" in results_df.columns, "Sentiments missing in output file"
+    assert len(results_df) == len(random_df), "Output length does not match input length"
+
+if __name__ == "__main__":
+    test_lightgbm_model_inference()
