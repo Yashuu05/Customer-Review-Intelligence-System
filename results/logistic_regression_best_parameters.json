@@ -1,0 +1,14 @@
+{
+    "logistic_regression": {
+        "best_parameters": {
+            "C": 0.001,
+            "class_weight": "balanced",
+            "fit_intercept": false,
+            "l1_ratio": 0.5,
+            "max_iter": 2000,
+            "penalty": "elasticnet",
+            "solver": "saga"
+        },
+        "best_score": 0.8291646685889328
+    }
+}

@@ -31,7 +31,7 @@ import mlflow
 # UPDATE THIS VARIABLE TO TRAIN DESIRED MODEL
 # Available models: "logistic_regression", "random_forest", "lightgbm", "xgboost"
 # ==========================================
-TARGET_MODEL_NAME = "lightgbm"
+TARGET_MODEL_NAME = "logistic_regression"
 
 def evaluate_model(y_test, y_pred) -> list:
     """
@@ -170,7 +170,7 @@ def word_embed_reviews(df):
         workers=4
     )
     # save word2vec model
-    word2vec_path = os.path.join(project_root, "model", "word2vec.model")
+    word2vec_path = os.path.join(project_root, "model", f"{TARGET_MODEL_NAME}_word2vec.model")
     print(f"saving word2vec model to {word2vec_path}")
     word2vec_model.save(word2vec_path)
 

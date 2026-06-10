@@ -13,9 +13,11 @@ from src.logger import logging as log
 import numpy as np
 from gensim.models import Word2Vec
 import pandas as pd
+import random
 
 MODEL_NAME = "lightgbm"
 MODEL_PATH = os.path.join(project_root, "model", f"{MODEL_NAME}_nlp.joblib")
+word2vec_path = os.path.join(project_root, "model", f"{MODEL_NAME}_word2vec.model")
 
 def classify_review(model, df) -> None:
     nltk.download("stopwords", quiet=True)
@@ -40,7 +42,6 @@ def classify_review(model, df) -> None:
         log.info("preprocessing the reviews")
         processed_series = df["review"].apply(preprocess_text)
 
-        word2vec_path = os.path.join(project_root, "model", "word2vec.model")
         log.info(f"loading word2vec model from {word2vec_path}")
         word2vec_model = Word2Vec.load(word2vec_path)
 
@@ -73,7 +74,6 @@ def classify_review(model, df) -> None:
         # save result into a csv file 
         pd.DataFrame({
             "review": df["review"],
-            "actual_sentiment": df["actual_sentiment"],
             "predict": predictions,    
             "sentiment": sentiments               
         }).to_csv(os.path.join(project_root, "results", "test_results.csv"), index=False)    
@@ -84,22 +84,7 @@ def classify_review(model, df) -> None:
 
 if __name__ == "__main__": 
 
-    df = pd.DataFrame({
-        "id":[1,2,3,4,5,6,7,8,9,10],
-        "review":[
-            "Yeah, overall the quality of the product is good.",
-            "worst experience ever!,cooler not provide cool air because 1year experience",
-            "I don't like the quality, but overall product is ok.",
-            "wonderful product can go for it",
-            "worth every penny.",
-            "do not but, waste product",
-            "never buying this again",
-            "this is average product. I expected someting great.",
-            "Not useful. I don't recommend this product to anyone.",
-            "Wonderful product. I like it and had good experience"
-        ],
-        "actual_sentiment":["positive","negative","neutral","positive","positive","negative","negative", "neutral","negative","positive"]
-    })
+    random.ra
 
     log.info("Testing initiated")
     print("loading saved lightgbm model...")
