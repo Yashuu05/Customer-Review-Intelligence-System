@@ -171,28 +171,28 @@ Programming language
 - Purpose : To store the Customer feedback and information safely  
     
 - Tables :   
-1. personal\_info  
+1. personal_info  
 - id (primary ky)  
 - age (integer)  
 - gender (varchar)  
 - role (varchar)  
 - product (varchar)
 - date (DATE)
-2. geo\_info  
-- id (foreign key reference from personal\_info)  
+2. geo_info  
+- id (foreign key reference from personal_info)  
 - state (varchar)  
 - city (varchar)  
-3. Reviews  
-- id (foreign key reference from personal\_info)  
+3. reviews  
+- id (foreign key reference from personal_info)  
 - feedback (text)  
-- output (varchar) \-\> negative or positive or neutral  
+- output (varchar) -> negative or positive or neutral  
 - Probability score (decimal)  
-4. admin\_users  
+4. admin
 - username  
 - Encrypted password  
-- email\_id 
+- email_id 
 
-- Database Language : PostgreSQL or MySQL  
+- Database Language : MySQL  
 - Programming language : python
 
 ---
