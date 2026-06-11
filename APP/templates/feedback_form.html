@@ -139,10 +139,16 @@
 </select>
 </div>
 </div>
-<!-- Role Input (Full-width) -->
-<div class="flex flex-col gap-stack-sm mb-stack-md">
+<!-- Role and Product Inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md mb-stack-md">
+<div class="flex flex-col gap-stack-sm">
 <label class="font-label-sm text-label-sm text-slate-gray" for="role">Role</label>
 <input class="border-light-gray font-body-md text-body-md p-3 w-full" id="role" name="role" placeholder="e.g. Operations Manager" type="text"/>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-sm text-label-sm text-slate-gray" for="product">Product</label>
+<input class="border-light-gray font-body-md text-body-md p-3 w-full" id="product" name="product" placeholder="e.g. mobile phone, speaker" type="text"/>
+</div>
 </div>
 <hr class="border-light-gray mb-stack-md"/>
 <!-- Section 2: Geographic -->

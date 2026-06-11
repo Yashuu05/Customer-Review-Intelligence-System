@@ -161,14 +161,18 @@
 <!-- Action Bar -->
 <div class="bg-white px-margin-page h-[56px] flex items-center justify-between border-b border-border sticky top-[64px] z-40">
 <div class="flex items-center gap-2">
-<button class="bg-primary text-white px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-primary-container">
+<form action="{{ url_for('launch_feedback') }}" method="POST" class="m-0">
+<button type="submit" class="bg-primary text-white px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-primary-container" {% if feedback_is_live %}disabled style="opacity: 0.5;"{% endif %}>
 <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
                     Launch Feedback Form
                 </button>
-<button class="border border-border bg-white text-text-primary px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-surface-container-low">
+</form>
+<form action="{{ url_for('close_feedback') }}" method="POST" class="m-0">
+<button type="submit" class="border border-border bg-white text-text-primary px-4 h-9 font-bold text-label-sm flex items-center gap-2 hover:bg-surface-container-low" {% if not feedback_is_live %}disabled style="opacity: 0.5;"{% endif %}>
 <span class="material-symbols-outlined text-[18px]">close</span>
                     Close Form
                 </button>
+</form>
 </div>
 <div class="flex items-center gap-2">
 <span class="text-[11px] text-secondary font-mono mr-4 italic">Last synced: 2 minutes ago</span>

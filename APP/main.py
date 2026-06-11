@@ -38,13 +38,31 @@ def login():
 
     return render_template('login.html')
 
+feedback_is_live = False
+
 @app.route('/feedback')
 def feedback():
+    if not feedback_is_live:
+        return render_template('feedback_closed.html')
     return render_template('feedback_form.html')
 
 @app.route('/admin')
 def admin():
-    return render_template('admin_dashboard.html')
+    return render_template('admin_dashboard.html', feedback_is_live=feedback_is_live)
+
+@app.route('/admin/launch_feedback', methods=['POST'])
+def launch_feedback():
+    global feedback_is_live
+    feedback_is_live = True
+    flash('Feedback form is now live.', 'success')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/close_feedback', methods=['POST'])
+def close_feedback():
+    global feedback_is_live
+    feedback_is_live = False
+    flash('Feedback form is now closed.', 'success')
+    return redirect(url_for('admin'))
 
 if __name__ == "__main__":
     app.run(debug=True)
