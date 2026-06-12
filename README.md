@@ -176,7 +176,6 @@ Programming language
 - age (integer)  
 - gender (varchar)  
 - role (varchar)  
-- product (varchar)
 - date (DATE)
 2. geo_info  
 - id (foreign key reference from personal_info)  
@@ -187,7 +186,11 @@ Programming language
 - feedback (text)  
 - output (varchar) -> negative or positive or neutral  
 - Probability score (decimal)  
-4. admin
+4. items
+- id (foreign key references from personal_info)
+- rating (integer)
+- product (decimal) 
+5. admin
 - username  
 - Encrypted password  
 - email_id 

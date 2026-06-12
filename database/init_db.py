@@ -34,7 +34,6 @@ def create_table():
                 role VARCHAR(50) NOT NULL,
                 gender VARCHAR(50),
                 age INT CHECK(age >= 18),
-                product VARCHAR(50)
                 date DATE
             )
             """,
@@ -53,6 +52,14 @@ def create_table():
                 feedback TEXT NOT NULL,
                 output VARCHAR(50) NOT NULL,
                 probability DECIMAL(10,2) NOT NULL
+            )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS items(
+            id INT,
+            FOREIGN KEY (id) REFERENCES personal_info(id),
+            rating INT,
+            product VARCHAR(50)
             )
             """,
             """
