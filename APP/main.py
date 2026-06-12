@@ -17,6 +17,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 from database.connect_db import connect_to_db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 username = os.getenv("DB_USERNAME")
@@ -147,19 +148,46 @@ def submit():
 def signup():
     if request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password')
+        user_password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
-        if password != confirm_password:
+        if user_password != confirm_password:
             flash('Passwords do not match.', 'error')
             return redirect(url_for('signup'))
         
-        # Mock Authentication
-        if email == 'yash@gmail.com' and password == 'yash123':
-            return redirect(url_for('admin'))
-        else:
-            flash('For testing, please use yash@gmail.com / yash123', 'error')
+        try:
+            db_username = os.getenv("DB_USERNAME")
+            db_password = os.getenv("DB_PASSWORD")
+            if not db_username or not db_password:
+                flash('Database credentials not configured.', 'error')
+                return redirect(url_for('signup'))
+
+            conn = connect_to_db(username=db_username, password=db_password)
+            mycursor = conn.cursor()
+            
+            # Check if email exists
+            mycursor.execute("SELECT email FROM admin WHERE email = %s", (email,))
+            if mycursor.fetchone():
+                flash('Email already registered. Please log in.', 'error')
+                return redirect(url_for('login'))
+                
+            hashed_password = generate_password_hash(user_password)
+            current_time = datetime.datetime.now(ZoneInfo("Asia/Kolkata"))
+            
+            mycursor.execute(
+                "INSERT INTO admin (email, password, register_date) VALUES (%s, %s, %s)", 
+                (email, hashed_password, current_time)
+            )
+            conn.commit()
+            flash('Registration successful! Please log in.', 'success')
+            return redirect(url_for('login'))
+            
+        except mysql.connector.Error as err:
+            flash(f"Database Error: {err}", 'error')
             return redirect(url_for('signup'))
+        finally:
+            if 'mycursor' in locals(): mycursor.close()
+            if 'conn' in locals() and conn.is_connected(): conn.close()
 
     return render_template('signup.html')
 
@@ -167,14 +195,33 @@ def signup():
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password')
+        user_password = request.form.get('password')
         
-        # Mock Authentication
-        if email == 'yash@gmail.com' and password == 'yash123':
-            return redirect(url_for('admin'))
-        else:
-            flash('Invalid email or password. Use yash@gmail.com / yash123', 'error')
+        try:
+            db_username = os.getenv("DB_USERNAME")
+            db_password = os.getenv("DB_PASSWORD")
+            if not db_username or not db_password:
+                flash('Database credentials not configured.', 'error')
+                return redirect(url_for('login'))
+
+            conn = connect_to_db(username=db_username, password=db_password)
+            mycursor = conn.cursor()
+            
+            mycursor.execute("SELECT password FROM admin WHERE email = %s", (email,))
+            admin_record = mycursor.fetchone()
+            
+            if admin_record and check_password_hash(admin_record[0], user_password):
+                return redirect(url_for('admin'))
+            else:
+                flash('Invalid email or password.', 'error')
+                return redirect(url_for('login'))
+                
+        except mysql.connector.Error as err:
+            flash(f"Database Error: {err}", 'error')
             return redirect(url_for('login'))
+        finally:
+            if 'mycursor' in locals(): mycursor.close()
+            if 'conn' in locals() and conn.is_connected(): conn.close()
 
     return render_template('login.html')
 

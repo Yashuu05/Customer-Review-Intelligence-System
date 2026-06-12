@@ -191,9 +191,10 @@ Programming language
 - rating (integer)
 - product (decimal) 
 5. admin
-- username  
-- Encrypted password  
-- email_id 
+- admin_id (auto_increment)
+- email
+- password
+- register_date 
 
 - Database Language : MySQL  
 - Programming language : python
