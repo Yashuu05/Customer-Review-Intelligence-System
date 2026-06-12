@@ -13,7 +13,7 @@ import re
 import datetime
 from zoneinfo import ZoneInfo
 
-project_root = os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 from database.connect_db import connect_to_db
@@ -30,13 +30,27 @@ app.secret_key = 'super_secret_key_for_flash_messages'
 
 # Try loading NLP models at startup to avoid slow request processing
 try:
+    print("loading resources... ")
+    print("loading NLP model")
     nlp = joblib.load(filename=MODEL_PATH)
+    print("laoding word2vec model")
     word2vec_model = Word2Vec.load(WORD2VEC_PATH)
-    nltk.download("stopwords", quiet=True)
-    nltk.download("wordnet", quiet=True)
+    print("checking stopwords")
+    try:
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        print("downloading stopwords")
+        nltk.download("stopwords", quiet=True)
+        
+    print("checking wordnet")
+    try:
+        nltk.data.find('corpora/wordnet')
+    except LookupError:
+        nltk.download("wordnet", quiet=True)
     stop_words = set(stopwords.words("english"))
     lemmatizer = WordNetLemmatizer()
     models_loaded = True
+    print("download completed")
 except Exception as e:
     print(f"Warning: Could not load NLP models. Error: {e}")
     models_loaded = False
@@ -108,7 +122,7 @@ def submit():
         sql_queries = [
             ("INSERT INTO personal_info (role, gender, age, product, date) VALUES (%s, %s, %s, %s, %s)", (role, gender, age, item, current_time)),
             ("INSERT INTO geo_info (city, state) VALUES (%s, %s)", (city, state)),
-            ("INSERT INTO reviews (review, sentiment, probability) VALUES (%s, %s, %s)", (review, sentiment, probability))
+            ("INSERT INTO reviews (feedback, output, probability) VALUES (%s, %s, %s)", (review, sentiment, probability))
         ]
         
         # execute the queries
@@ -189,4 +203,4 @@ def close_feedback():
     return redirect(url_for('admin'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
