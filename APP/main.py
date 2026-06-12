@@ -83,13 +83,14 @@ def submit():
             
         # prediction expects a 2D array
         prediction = nlp.predict([vector])
+        probabilities = nlp.predict_proba([vector])[0]
+        pred_val = prediction[0]
+        
         try:
-            probability = float(prediction[0])
+            probability = float(probabilities[pred_val])
             print(f"probability : {probability}")
         except (TypeError, IndexError, ValueError):
             probability = 0.99
-            
-        pred_val = prediction[0]
         if pred_val == 0:
             sentiment = "negative"
         elif pred_val == 1:
@@ -122,7 +123,7 @@ def submit():
         
         # Use parameterized queries (%s placeholders) to prevent SQL Injection
         sql_queries = [
-            ("INSERT INTO personal_info (role, gender, age, product, date) VALUES (%s, %s, %s, %s)", (role, gender, age, current_time)),
+            ("INSERT INTO personal_info (role, gender, age, date) VALUES (%s, %s, %s, %s)", (role, gender, age, current_time)),
             ("INSERT INTO geo_info (city, state) VALUES (%s, %s)", (city, state)),
             ("INSERT INTO reviews (feedback, output, probability) VALUES (%s, %s, %s)", (review, sentiment, probability)),
             ("INSERT INTO items (rating, product) VALUES (%s, %s)", (rating, item))
