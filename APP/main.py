@@ -122,11 +122,20 @@ def submit():
         current_time = datetime.datetime.now(ZoneInfo("Asia/Kolkata"))
         
         # Use parameterized queries (%s placeholders) to prevent SQL Injection
+        # First insert into personal_info to generate the auto-incremented id
+        mycursor.execute(
+            "INSERT INTO personal_info (role, gender, age, date) VALUES (%s, %s, %s, %s)", 
+            (role, gender, age, current_time)
+        )
+        
+        # Fetch the generated id
+        customer_id = mycursor.lastrowid
+        
+        # Now insert into other tables using the generated id
         sql_queries = [
-            ("INSERT INTO personal_info (role, gender, age, date) VALUES (%s, %s, %s, %s)", (role, gender, age, current_time)),
-            ("INSERT INTO geo_info (city, state) VALUES (%s, %s)", (city, state)),
-            ("INSERT INTO reviews (feedback, output, probability) VALUES (%s, %s, %s)", (review, sentiment, probability)),
-            ("INSERT INTO items (rating, product) VALUES (%s, %s)", (rating, item))
+            ("INSERT INTO geo_info (id, city, state) VALUES (%s, %s, %s)", (customer_id, city, state)),
+            ("INSERT INTO reviews (id, feedback, output, probability) VALUES (%s, %s, %s, %s)", (customer_id, review, sentiment, probability)),
+            ("INSERT INTO items (id, rating, product) VALUES (%s, %s, %s)", (customer_id, rating, item))
         ]
         
         # execute the queries
