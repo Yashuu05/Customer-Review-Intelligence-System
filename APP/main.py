@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 import os 
 import sys
 from dotenv import load_dotenv
@@ -234,6 +234,12 @@ def login():
             if 'conn' in locals() and conn.is_connected(): conn.close()
 
     return render_template('login.html')
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.clear()
+    flash('You have been successfully logged out.', 'success')
+    return redirect(url_for('login'))
 
 feedback_is_live = False
 

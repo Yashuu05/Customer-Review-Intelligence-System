@@ -117,10 +117,12 @@
 <p class="text-[10px] text-secondary">Project Alpha Console</p>
 </div>
 </div>
-<button class="flex items-center gap-2 px-3 py-1 bg-surface-container hover:bg-surface-container-high transition-colors">
+<form action="{{ url_for('logout') }}" method="POST" class="m-0">
+<button type="submit" class="flex items-center gap-2 px-3 py-1 bg-surface-container hover:bg-surface-container-high transition-colors">
 <span class="material-symbols-outlined text-[20px]">logout</span>
 <span class="text-label-sm font-bold">Logout</span>
 </button>
+</form>
 </div>
 </header>
 <!-- SideNavBar (Suppressed for Main Dashboard Grid Focus per request, but keeping structure) -->
